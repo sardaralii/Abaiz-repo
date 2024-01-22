@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  hello-service:
+    build:
+      context: ./hello-service/HelloService
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    networks:
+      - sample-network
+
+  world-service:
+    build:
+      context: ./world-service/WorldService
+      dockerfile: Dockerfile
+    ports:
+      - "8081:80"
+    networks:
+      - sample-network
+
+networks:
+  sample-network:
+    driver: bridge
