@@ -12,19 +12,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
 
-    - name: Restore dependencies
-      run: dotnet restore
-
-    - name: Build and Test HelloService
+    - name: Restore dependencies and Build HelloService
       run: |
         cd hello-service/HelloService
+        dotnet restore
         dotnet build --no-restore
         dotnet test --no-build --verbosity normal
 
@@ -33,19 +32,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
 
-    - name: Restore dependencies
-      run: dotnet restore
-
-    - name: Build and Test WorldService
+    - name: Restore dependencies and Build WorldService
       run: |
         cd world-service/WorldService
+        dotnet restore
         dotnet build --no-restore
         dotnet test --no-build --verbosity normal
 
