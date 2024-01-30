@@ -13,10 +13,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Setup Docker
+    - name: Set up Docker
       uses: docker/setup-buildx-action@v1
-      with:
-        version: latest
+
+    - name: Check Docker version
+      run: docker --version
 
   build-and-test-hello:
     runs-on: ubuntu-latest
