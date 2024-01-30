@@ -60,12 +60,12 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Setup OWASP ZAP
-      uses: zaproxy/action-baseline@v3
+      uses: zaproxy/action-baseline@v3.2.0
       with:
         target: "http://hello-service-hello-service-url"  # Replace with the actual URL of HelloService
 
     - name: Run OWASP ZAP
-      uses: zaproxy/action-baseline@v3
+      uses: zaproxy/action-baseline@v3.2.0
       with:
         zap-host: "localhost"  # Change if ZAP is running on a different host
         zap-port: "8080"       # Change if ZAP is running on a different port
@@ -81,12 +81,12 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Setup OWASP ZAP
-      uses: zaproxy/action-baseline@v3
+      uses: zaproxy/action-baseline@v3.2.0
       with:
         target: "http://world-service-world-service-url"  # Replace with the actual URL of WorldService
 
     - name: Run OWASP ZAP
-      uses: zaproxy/action-baseline@v3
+      uses: zaproxy/action-baseline@v3.2.0
       with:
         zap-host: "localhost"  # Change if ZAP is running on a different host
         zap-port: "8080"       # Change if ZAP is running on a different port
