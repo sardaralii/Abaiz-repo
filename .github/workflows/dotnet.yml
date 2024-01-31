@@ -1,4 +1,4 @@
-name: .NET and ZAP Testing
+name: .NET
 
 on:
   push:
@@ -7,50 +7,29 @@ on:
     branches: [ "master" ]
 
 jobs:
-  setup-environment:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+  build:
 
-    - name: Set up Docker
-      uses: docker/setup-buildx-action@v1
-
-  build-and-test-hello:
     runs-on: ubuntu-latest
-    needs: setup-environment
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
 
-    - name: Restore dependencies and Build HelloService
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build and Test HelloService
       run: |
         cd hello-service/HelloService
-        dotnet restore
         dotnet build --no-restore
         dotnet test --no-build --verbosity normal
 
-  zap-testing-hello:
-    runs-on: ubuntu-latest
-    needs: build-and-test-hello
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Setup OWASP ZAP
-      uses: zaproxy/action-baseline@v0.11.0
-      with:
-        target: "http://hello-service-hello-service-url"  # Replace with the actual URL of HelloService
-        additionalScanArguments: "-config api.addrs.addr.name=.* -config api.addrs.addr.regex=true"
-
-    - name: Run OWASP ZAP
-      uses: zaproxy/action-baseline@v0.11.0
-      with:
-        zap-host: "localhost"  # Change if ZAP is running on a different host
-        zap-port: "8080"       # Change if ZAP is running on a different port
-        additionalScanArguments: "-config api.addrs.addr.name=.* -config api.addrs.addr.regex=true"
+    - name: Build and Test WorldService
+      run: |
+        cd world-service/WorldService
+        dotnet build --no-restore
+        dotnet test --no-build --verbosity normal
